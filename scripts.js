@@ -1,6 +1,30 @@
 let dadosCarregados = [];
-//Nome do usuário
-nomeusuario = prompt("Qual o seu nome?");
+let nomeusuario = null;
+
+//Adicionar usuário
+ novousuario();
+function novousuario(){
+    nomeusuario = prompt("Qual o seu nome?");
+
+    const novousuario = {
+        name: nomeusuario,
+    }
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", novousuario);
+
+    promise.then(pegarMensagens);
+    promise.catch(tratarErro);
+
+}
+
+// Tratar erro de usuaŕio
+function tratarErro(error){
+    console.log(error.response);
+    if (error.response.status === 400){
+        alert('Usuário inválido. Insira outro nome.');
+        novousuario();
+    }
+}
 
 // Pegar mensagens
 setInterval(pegarMensagens,3000);
@@ -52,6 +76,4 @@ function mostrarultimamsg(){
     const ultimamensagem = divMensagens.lastElementChild;
     ultimamensagem.scrollIntoView();
 }
-
-
 
