@@ -11,10 +11,9 @@ function novousuario(){
     }
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", novousuario);
-
     promise.then(pegarMensagens);
     promise.catch(tratarErro);
-
+    setInterval(manterconexao,5000);
 }
 
 // Tratar erro de usuaŕio
@@ -24,6 +23,13 @@ function tratarErro(error){
         alert('Usuário inválido. Insira outro nome.');
         novousuario();
     }
+}
+
+//Manter conexão
+function manterconexao(novousuario){
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {name: nomeusuario});
+    promise.then(function(){console.log('Usuário continua ativo');});
+    promise.catch(function () {alert('Você não está mais conectado')});
 }
 
 // Pegar mensagens
