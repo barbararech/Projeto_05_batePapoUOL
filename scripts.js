@@ -1,7 +1,7 @@
 let dadosCarregados = [];
 let nomeusuario = null;
 
-//Adicionar usuário
+// Adicionar usuário
  novousuario();
 function novousuario(){
     nomeusuario = prompt("Qual o seu nome?");
@@ -25,7 +25,7 @@ function tratarErro(error){
     }
 }
 
-//Manter conexão
+// Manter conexão
 function manterconexao(novousuario){
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {name: nomeusuario});
     promise.then(function(){console.log('Usuário continua ativo');});
@@ -43,8 +43,8 @@ function pegarMensagens(){
 function carregarDados(resposta){
     mensagens = resposta.data;
     renderizarMensagens();
-    console.log(mensagens);
     mostrarultimamsg();
+    console.log(mensagens);
 }
 
 //Renderizar mensagens
@@ -83,3 +83,22 @@ function mostrarultimamsg(){
     ultimamensagem.scrollIntoView();
 }
 
+//Enviar mensagens
+
+function enviarmensagem(){
+
+    const destinatario = "Todos";
+    const msgdigitada = document.querySelector(".rodape input").value;
+    const typemsg = "message";
+    
+    const novamensagem = {
+        from: nomeusuario,
+        to: destinatario,
+        text: msgdigitada,
+        type: typemsg, // ou "private_message" para o bônus
+    }
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages",novamensagem);
+    promise.then(pegarMensagens);
+    promise.catch(function () {window.location.reload(true)});
+}
