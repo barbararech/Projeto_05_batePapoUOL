@@ -84,7 +84,6 @@ function mostrarultimamsg(){
 }
 
 //Enviar mensagens
-
 function enviarmensagem(){
 
     const destinatario = "Todos";
@@ -102,3 +101,12 @@ function enviarmensagem(){
     promise.then(pegarMensagens);
     promise.catch(function () {window.location.reload(true)});
 }
+
+// Enviar mensagem com enter
+let inputtext = document.getElementById("myInput");
+inputtext.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("myButton").click();
+  }
+});
