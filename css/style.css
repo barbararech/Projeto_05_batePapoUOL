@@ -90,14 +90,13 @@ input::placeholder{
 /* Mensagens */
 .mensagem{
     width: 100%;
-    height: 40px;
+    padding: 10px 8px;
     margin-bottom: 4px ;
     font-size: 14px;
     font-weight: 400;
     display: flex;
     align-items: center;
-    padding: 0 8px;
-
+    flex-wrap: wrap;
 }
 
 .status{
@@ -120,6 +119,11 @@ strong{
     color: #aaaaaa;
 }
 
+.conteudo{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 span{
-    margin-right: 5px;
+    margin-right: 5px; 
 }

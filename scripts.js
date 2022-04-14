@@ -43,9 +43,9 @@ function pegarMensagens(){
 function carregarDados(resposta){
     mensagens = resposta.data;
     renderizarMensagens();
-    mostrarultimamsg();
     console.log(mensagens);
 }
+
 
 //Renderizar mensagens
 function renderizarMensagens(){
@@ -73,8 +73,11 @@ function renderizarMensagens(){
             <span class="conteudo"> ${mensagens[i].text} </span>
         </div>`
         }
-    }
+    } 
+
+   mostrarultimamsg()
 }
+
 
 //Mostrar última mensagem automaticamente
 function mostrarultimamsg(){
@@ -108,5 +111,9 @@ inputtext.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
    event.preventDefault();
    document.getElementById("myButton").click();
+   document.getElementById("myInput").value = "";
   }
+});
+document.getElementById("myButton").addEventListener('click', function(event2){
+    document.getElementById("myInput").value = "";
 });
