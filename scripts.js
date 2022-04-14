@@ -54,36 +54,62 @@ function renderizarMensagens(){
     for (let i=0; i<mensagens.length; i++){
         if (mensagens[i].type === "status"){
             divMensagens.innerHTML += `<div class="mensagem status">
-            <span class="horario"> (${mensagens[i].time}) </span>
-            <span class="pessoas"> <strong>  ${mensagens[i].from} </strong> </span>
+            <span class="horario">(${mensagens[i].time})</span>
+            <span class="pessoas"><strong>${mensagens[i].from}</strong></span>
             <span class="conteudo"> ${mensagens[i].text} </span>
         </div>` 
         }
         if (mensagens[i].type === "message"){
             divMensagens.innerHTML += `<div class="mensagem publica">
-            <span class="horario"> (${mensagens[i].time}) </span>
-            <span class="pessoas"> <strong>  ${mensagens[i].from} </strong> para <strong> ${mensagens[i].to}</strong>: </span>
+            <span class="horario">(${mensagens[i].time})</span>
+            <span class="pessoas"><strong>${mensagens[i].from}</strong> para <strong> ${mensagens[i].to}</strong>: </span>
             <span class="conteudo"> ${mensagens[i].text} </span>
         </div>`
         }
         if (mensagens[i].type === "private_message" && (mensagens[i].from == nomeusuario || mensagens[i].to == nomeusuario)){
             divMensagens.innerHTML += `<div class="mensagem reservada">
-            <span class="horario"> (${mensagens[i].time}) </span>
-            <span class="pessoas"> <strong>  ${mensagens[i].from} </strong> reservadamente para <strong> ${mensagens[i].to}</strong>: </span>
+            <span class="horario">(${mensagens[i].time})</span>
+            <span class="pessoas"><strong>${mensagens[i].from}</strong> reservadamente para <strong> ${mensagens[i].to}</strong>: </span>
             <span class="conteudo"> ${mensagens[i].text} </span>
         </div>`
         }
-    } 
 
-   mostrarultimamsg()
+    } 
+    verificarMensagensIguais()
+  
 }
 
+
+//Verificar se as mensagem são iguais para dar scroll
+function verificarMensagensIguais(){
+    const divMensagens = document.querySelector(".containerMensagens");
+
+    let timeUltimaMsgApi = mensagens[mensagens.length-1].time;
+    let nameUltimaMsgApi = mensagens[mensagens.length-1].from;
+
+    let ultimaMensagem = divMensagens.lastElementChild;
+    let timeUltimaMensagem = ultimaMensagem.getElementsByClassName("horario");
+    let timeUltimaMensagemContent = timeUltimaMensagem[0].innerHTML.replace(/[(]/,'').replace(/[)]/,'')
+
+    let nameUltimaMensagem = ultimaMensagem.getElementsByClassName("pessoas");
+    let nameUltimaMensagemContent = nameUltimaMensagem[0].innerHTML.replace(/[/]/,'').replace(/<strong>/,'').replace(/<strong>/,'');
+
+    console.log(timeUltimaMsgApi);
+    console.log(timeUltimaMensagemContent);
+
+    console.log(nameUltimaMsgApi);
+    console.log(nameUltimaMensagemContent);
+
+    if(timeUltimaMsgApi !== timeUltimaMensagemContent && nameUltimaMsgApi !== nameUltimaMensagemContent){
+        mostrarultimamsg();
+    } 
+}
 
 //Mostrar última mensagem automaticamente
 function mostrarultimamsg(){
     const divMensagens = document.querySelector(".containerMensagens");
     const ultimamensagem = divMensagens.lastElementChild;
-    ultimamensagem.scrollIntoView();
+        ultimamensagem.scrollIntoView();
 }
 
 //Enviar mensagens
