@@ -56,21 +56,21 @@ function renderizarMensagens(){
             divMensagens.innerHTML += `<div class="mensagem status">
             <span class="horario">(${mensagens[i].time})</span>
             <span class="pessoas"><strong>${mensagens[i].from}</strong></span>
-            <span class="conteudo"> ${mensagens[i].text} </span>
+            <span class="conteudo">${mensagens[i].text}</span>
         </div>` 
         }
         if (mensagens[i].type === "message"){
             divMensagens.innerHTML += `<div class="mensagem publica">
             <span class="horario">(${mensagens[i].time})</span>
             <span class="pessoas"><strong>${mensagens[i].from}</strong> para <strong> ${mensagens[i].to}</strong>: </span>
-            <span class="conteudo"> ${mensagens[i].text} </span>
+            <span class="conteudo">${mensagens[i].text}</span>
         </div>`
         }
         if (mensagens[i].type === "private_message" && (mensagens[i].from == nomeusuario || mensagens[i].to == nomeusuario)){
             divMensagens.innerHTML += `<div class="mensagem reservada">
             <span class="horario">(${mensagens[i].time})</span>
             <span class="pessoas"><strong>${mensagens[i].from}</strong> reservadamente para <strong> ${mensagens[i].to}</strong>: </span>
-            <span class="conteudo"> ${mensagens[i].text} </span>
+            <span class="conteudo">${mensagens[i].text}</span>
         </div>`
         }
 
@@ -84,23 +84,23 @@ function renderizarMensagens(){
 function verificarMensagensIguais(){
     const divMensagens = document.querySelector(".containerMensagens");
 
-    let timeUltimaMsgApi = mensagens[mensagens.length-1].time;
-    let nameUltimaMsgApi = mensagens[mensagens.length-1].from;
+    let timeUltimaMsgApi = mensagens[mensagens.length-2].time;
+    let textUltimaMsgApi = mensagens[mensagens.length-2].text;
 
     let ultimaMensagem = divMensagens.lastElementChild;
     let timeUltimaMensagem = ultimaMensagem.getElementsByClassName("horario");
     let timeUltimaMensagemContent = timeUltimaMensagem[0].innerHTML.replace(/[(]/,'').replace(/[)]/,'')
 
-    let nameUltimaMensagem = ultimaMensagem.getElementsByClassName("pessoas");
-    let nameUltimaMensagemContent = nameUltimaMensagem[0].innerHTML.replace(/[/]/,'').replace(/<strong>/,'').replace(/<strong>/,'');
+    let textUltimaMensagem = ultimaMensagem.getElementsByClassName("conteudo");
+    let textUltimaMensagemContent = textUltimaMensagem[0].innerHTML;
 
     console.log(timeUltimaMsgApi);
     console.log(timeUltimaMensagemContent);
 
-    console.log(nameUltimaMsgApi);
-    console.log(nameUltimaMensagemContent);
+    console.log(textUltimaMsgApi);
+    console.log(textUltimaMensagemContent);
 
-    if(timeUltimaMsgApi !== timeUltimaMensagemContent && nameUltimaMsgApi !== nameUltimaMensagemContent){
+    if(timeUltimaMsgApi !== timeUltimaMensagemContent && textUltimaMsgApi !== textUltimaMensagemContent){
         mostrarultimamsg();
     } 
 }
