@@ -12,12 +12,12 @@ function novousuario(){
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", novousuario);
     promise.then(pegarMensagens);
-    promise.catch(tratarErro);
+    promise.catch(tratarErroNome);
     setInterval(manterconexao,5000);
 }
 
 // Tratar erro de usuaŕio
-function tratarErro(error){
+function tratarErroNome(error){
     console.log(error.response);
     if (error.response.status === 400){
         alert('Usuário inválido. Insira outro nome.');
@@ -26,11 +26,18 @@ function tratarErro(error){
 }
 
 // Manter conexão
-function manterconexao(novousuario){
+function manterconexao(){
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {name: nomeusuario});
     promise.then(function(){console.log('Usuário continua ativo');});
-    promise.catch(function () {alert('Você não está mais conectado')});
+    promise.catch(tratarErroConexao);
 }
+
+// Tratar erro de conexão
+function tratarErroConexao(){
+    alert('Você não está mais conectado');
+    window.location.reload(true);
+}
+
 
 // Pegar mensagens
 setInterval(pegarMensagens,3000);
@@ -50,6 +57,7 @@ function carregarDados(resposta){
 //Renderizar mensagens
 function renderizarMensagens(){
     const divMensagens = document.querySelector(".containerMensagens");
+    divMensagens.innerHTML="";
         
     for (let i=0; i<mensagens.length; i++){
         if (mensagens[i].type === "status"){
@@ -76,9 +84,7 @@ function renderizarMensagens(){
 
     } 
     verificarMensagensIguais()
-  
 }
-
 
 //Verificar se as mensagem são iguais para dar scroll
 function verificarMensagensIguais(){
@@ -100,7 +106,9 @@ function verificarMensagensIguais(){
     console.log(textUltimaMsgApi);
     console.log(textUltimaMensagemContent);
 
-    if(timeUltimaMsgApi !== timeUltimaMensagemContent && textUltimaMsgApi !== textUltimaMensagemContent){
+    let mensagemNova = (timeUltimaMsgApi !== timeUltimaMensagemContent && textUltimaMsgApi !== textUltimaMensagemContent);
+
+    if(mensagemNova){
         mostrarultimamsg();
     } 
 }
@@ -128,18 +136,20 @@ function enviarmensagem(){
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages",novamensagem);
     promise.then(pegarMensagens);
-    promise.catch(function () {window.location.reload(true)});
+    promise.catch(function(){window.location.reload(true)});
 }
 
 // Enviar mensagem com enter
 let inputtext = document.getElementById("myInput");
 inputtext.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-   event.preventDefault();
-   document.getElementById("myButton").click();
-   document.getElementById("myInput").value = "";
-  }
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById("myButton").click();
+        document.getElementById("myInput").value = "";
+    }
 });
+
+//Limpar campo do Input
 document.getElementById("myButton").addEventListener('click', function(event2){
     document.getElementById("myInput").value = "";
 });
