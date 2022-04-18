@@ -60,7 +60,7 @@ input::placeholder{
     font-style: italic;
   }
 
-/* Icons */
+/* Ìcones */
 .topo .icon{
     height: 35px;
     width: 45px; 
@@ -76,7 +76,6 @@ input::placeholder{
 }
 
 /* Container Mensagens */
-
 .containerMensagens{
     margin-top: 80px;
     margin-bottom: 80px;
@@ -120,7 +119,6 @@ strong{
 }
 
 .conteudo{
-    
     display: flex;
     flex-wrap: wrap;
 }
